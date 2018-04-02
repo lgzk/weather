@@ -1,0 +1,12 @@
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 320px);
+  grid-gap: 20px;
+}
+li {
+  list-style: none;
+  border: 1px solid grey;
+  width: 300px;
+  border-radius: 20px;
+  padding: 10px;
+}
