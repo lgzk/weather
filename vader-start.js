@@ -1,3 +1,5 @@
+'use strict';
+
 /* Förklaringar till förkortningarna i parameterlistan som returneras från SMHI
 spp         frozen precipitation, %                 int, 0-100, -9 om null
 pcat        precipitation category                  int, 0-6
@@ -72,7 +74,6 @@ const vadertyp = [
   'M&aring;ttligt sn&ouml;fall',
   'Ymnigt sn&ouml;fall'
 ];
-
 const mittObjekt = {
   styrka: 5,
   storlek: 'XL',
@@ -80,28 +81,38 @@ const mittObjekt = {
 };
 
 // const objektStyrkan = mittObjekt.styrka;
-// const firstColorInObject = mittObjekt.varianter.colors[0] 
+// const firstColorInObject = mittObjekt.varianter.colors[2]; // blue
 // console.log(firstColorInObject);
 
 const listan = document.getElementById('lista');
+
+//array for temp
+
+let diagramTemp =('temperatur');
+
+diagramTemp.push('temperatur');
+
+console.log(temperature);
+
+//array for time
 
 fetch(url)
   .then(response => response.json())
   .then((vaderJson) => {
     const tidsSerie = vaderJson.timeSeries;
-    tidsSerie.forEach(tidpunkt => {
+    tidsSerie.forEach((tidpunkt) => {
       const { validTime, parameters } = tidpunkt;
-      const vadersymbol = parameters.find(parameterObjekt => parameterObjkt.name === 'Wsymb2').values[0];
-      const temperatur = parameters.find(parameterObjekt => parameterObjkt.name === 't').values[0];
-      const vindstyrka = parameters.find(parameterObjekt => parameterObjkt.name === 'ws').values[0];
-      const byvind = parameters.find(parameterObjekt => parameterObjkt.name === 'gust').values[0];
+      const vadersymbol = parameters.find(parameterObjekt => parameterObjekt.name === 'Wsymb2').values[0];
+      const temperatur = parameters.find(parameterObjekt => parameterObjekt.name === 't').values[0];
+      const vindstyrka = parameters.find(parameterObjekt => parameterObjekt.name === 'ws').values[0];
+      const byvind = parameters.find(parameterObjekt => parameterObjekt.name === 'gust').values[0];
       const lokalTid = new Date(validTime);
       const listObjekt = document.createElement('li');
+
       listObjekt.innerHTML = `<h3><img src="bilder/${vadersymbol}.png" alt="${vadertyp[vadersymbol]}" /> ${temperatur}°C</h3>
       <p>${lokalTid.getDate()} ${months[lokalTid.getMonth()]} kl. ${lokalTid.getHours()}</p>
       <p>Vindstyrka: ${vindstyrka}(${byvind})</p>`;
-      listan.appendChild(listObjekt);    
-
+      listan.appendChild(listObjekt);
     });
   });
 
@@ -109,7 +120,7 @@ const ctx = document.getElementById('myChart');
 const myChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'], //tid
+    labels: ['label'], //tid
     datasets: [
       {
         label: '# of Votes',
