@@ -88,13 +88,11 @@ const listan = document.getElementById('lista');
 
 //array for temp
 
-let diagramTemp =('temperatur');
-
-diagramTemp.push('temperatur');
-
-console.log(temperature);
+let diagramTemp =[];
 
 //array for time
+
+let diagramTime =[];
 
 fetch(url)
   .then(response => response.json())
@@ -108,6 +106,8 @@ fetch(url)
       const byvind = parameters.find(parameterObjekt => parameterObjekt.name === 'gust').values[0];
       const lokalTid = new Date(validTime);
       const listObjekt = document.createElement('li');
+      diagramTemp.push(temperatur);
+      diagramTime.push(lokalTid);
 
       listObjekt.innerHTML = `<h3><img src="bilder/${vadersymbol}.png" alt="${vadertyp[vadersymbol]}" /> ${temperatur}°C</h3>
       <p>${lokalTid.getDate()} ${months[lokalTid.getMonth()]} kl. ${lokalTid.getHours()}</p>
@@ -120,11 +120,11 @@ const ctx = document.getElementById('myChart');
 const myChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['label'], //tid
+    labels: diagramTime, //tid
     datasets: [
       {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3], //tempuratur
+        label: 'Temp (°C)',
+        data: diagramTemp, //tempuratur
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -157,3 +157,5 @@ const myChart = new Chart(ctx, {
     }
   }
 });
+
+console.log(diagramTemp);
